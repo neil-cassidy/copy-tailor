@@ -95,4 +95,63 @@ display(product)
 
 # COMMAND ----------
 
+cust_per = cust_df['persona'].values[0]
+print(cust_per)
+
+# COMMAND ----------
+
+
+
+# COMMAND ----------
+
+# Function to call the LLM API
+def recomm(product, customer_data):
+    prompt = f"""
+    
+        Generate personalized product descriptions for  product, enhancing customer engagement and satisfaction.
+        . Use the following attributes as input:
+
+    product_description: {product['product_description']}
+    product_details: {product['product_details']}
+    customer persona: {customer_data}
+
+
+"""    
+    # Calling the ChatCompletion API
+    response = ChatCompletion.create(
+        model="databricks-dbrx-instruct",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=128
+    )
+
+    return response.message
+
+# COMMAND ----------
+
+cust_per = cust_df['persona']
+improved_descriptions = []
+for index, row in product.iterrows():
+    column_info = {
+        "product_description": row["product_description"],
+        "product_details": row["product_details"], 
+    }
+
+    improved_description = recomm(column_info, cust_per)
+    improved_descriptions.append(improved_description)
+  
+# col_pdf.rename(columns={'column_description': 'table_col_description'}, inplace=True)
+
+product["column_description"] = improved_descriptions
+
+display(product)
+
+# COMMAND ----------
+
+display(product['product_id','product_description','column_description'])
+
+# COMMAND ----------
+
 

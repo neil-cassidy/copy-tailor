@@ -121,12 +121,6 @@ http://dbc-c91a7871-73b3.cloud.databricks.com>/driver-proxy/o/3268838268167459/2
 
 # COMMAND ----------
 
-url = "https://dbc-c91a7871-73b3.cloud.databricks.com/driver-proxy/o/3268838268167459/281535298081063/5000/"
-
-
-
-# COMMAND ----------
-
 @app.route('/shutdown', methods=['POST'])
 def shutdown():
     server.shutdown()
