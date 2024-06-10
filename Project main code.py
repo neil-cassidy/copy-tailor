@@ -145,12 +145,13 @@ for index, row in product.iterrows():
 # col_pdf.rename(columns={'column_description': 'table_col_description'}, inplace=True)
 
 product["column_description"] = improved_descriptions
+pr
 
 display(product)
 
 # COMMAND ----------
 
-display(product['product_id','product_description','column_description'])
+display(product[['product_id','product_description','persona','column_description']])
 
 # COMMAND ----------
 
